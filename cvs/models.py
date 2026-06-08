@@ -1,3 +1,18 @@
 from django.db import models
 
-# Create your models here.
+
+class CVProfile(models.Model):
+    title = models.CharField(max_length=150)
+    country = models.CharField(max_length=50, blank=True)
+    specialization = models.CharField(max_length=150, blank=True)
+    short_description = models.TextField(blank=True)
+    file_path = models.CharField(max_length=500)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["title"]
+
+    def __str__(self):
+        return self.title
