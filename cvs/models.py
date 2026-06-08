@@ -3,7 +3,13 @@ from django.db import models
 
 class CVProfile(models.Model):
     title = models.CharField(max_length=150)
-    country = models.CharField(max_length=50, blank=True)
+    country = models.ForeignKey(
+        "sources.Country",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="cv_profiles",
+    )
     specialization = models.CharField(max_length=150, blank=True)
     short_description = models.TextField(blank=True)
     file_path = models.CharField(max_length=500)

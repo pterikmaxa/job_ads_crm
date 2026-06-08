@@ -17,7 +17,13 @@ class JobPost(models.Model):
     url = models.URLField(max_length=1000, unique=True)
     title = models.CharField(max_length=250)
     company = models.CharField(max_length=200, blank=True)
-    country = models.CharField(max_length=50, blank=True)
+    country = models.ForeignKey(
+        "sources.Country",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="job_posts",
+    )
     city = models.CharField(max_length=100, blank=True)
     source_name = models.CharField(max_length=150, blank=True)
     provider_name = models.CharField(max_length=150, blank=True)

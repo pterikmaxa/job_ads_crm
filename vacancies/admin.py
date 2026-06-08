@@ -3,8 +3,15 @@ from django.contrib import admin
 from .models import JobPost
 
 
+class ActiveCountryAdminMixin:
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "country":
+            kwargs["queryset"] = db_field.remote_field.model.objects.filter(is_active=True)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 @admin.register(JobPost)
-class JobPostAdmin(admin.ModelAdmin):
+class JobPostAdmin(ActiveCountryAdminMixin, admin.ModelAdmin):
     list_display = (
         "title",
         "company",
@@ -19,7 +26,8 @@ class JobPostAdmin(admin.ModelAdmin):
     search_fields = (
         "title",
         "company",
-        "country",
+        "country__name",
+        "country__code",
         "city",
         "url",
         "source_name",
