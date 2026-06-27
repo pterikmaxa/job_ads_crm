@@ -1,0 +1,32 @@
+.technology-choice-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 14px;
+}
+
+.technology-choice-label {
+    color: #cbd5e1;
+    white-space: nowrap;
+}
+
+#id_technology_choice {
+    min-width: 180px;
+}
+
+.technology-add-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #6b7280;
+    background: #f3f4f6;
+    color: #111827;
+    border-radius: 4px;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+}
+
+.technology-add-btn:hover {
+    background: #e5e7eb;
+}

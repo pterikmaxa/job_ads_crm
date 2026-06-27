@@ -1,22 +1,21 @@
-"""
-URL configuration for job_ads_crm project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 
+from job_ads_crm import admin_labels  # noqa: F401
+from jobs import views as jobs_views
+from sources import views as sources_views
+from vacancies import views as vacancies_views
+
+
+admin.site.site_header = "Администрирование Django"
+admin.site.site_title = "Job Ads CRM"
+admin.site.index_title = "Панель управления"
+
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("", jobs_views.home, name="home"),
+    path("sites/", sources_views.jobsite_list, name="jobsite_list"),
+    path("vacancies/", vacancies_views.jobpost_list, name="jobpost_list"),
+    path("vacancies/<int:pk>/", vacancies_views.jobpost_detail, name="jobpost_detail"),
+    path("admin/", admin.site.urls),
 ]

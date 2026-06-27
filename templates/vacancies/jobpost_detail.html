@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }}{% endblock %}
+
+{% block content %}
+<h1>Просмотр вакансии</h1>
+
+<p>
+    <a href="{% url 'home' %}">На главную</a>
+    |
+    <a href="{% url 'admin:vacancies_jobpost_change' job.pk %}">Редактировать в админке</a>
+</p>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th>Поле</th>
+        <th>Значение</th>
+    </tr>
+    <tr>
+        <td>ID</td>
+        <td><input type="text" value="{{ job.id }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Название</td>
+        <td><input type="text" value="{{ job.title }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Компания</td>
+        <td><input type="text" value="{{ job.company }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Job site</td>
+        <td><input type="text" value="{{ job.job_site }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>CV profile</td>
+        <td><input type="text" value="{{ job.cv_profile }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Country</td>
+        <td><input type="text" value="{{ job.country }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>City</td>
+        <td><input type="text" value="{{ job.city }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Source name</td>
+        <td><input type="text" value="{{ job.source_name }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Provider name</td>
+        <td><input type="text" value="{{ job.provider_name }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Status</td>
+        <td><input type="text" value="{{ job.status }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Response received</td>
+        <td><input type="text" value="{{ job.response_received }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>URL</td>
+        <td>
+            <textarea readonly rows="3" cols="90">{{ job.url }}</textarea>
+            <br>
+            <a href="{{ job.url }}" target="_blank">Открыть внешний сайт вакансии</a>
+        </td>
+    </tr>
+    <tr>
+        <td>Comment</td>
+        <td><textarea readonly rows="5" cols="90">{{ job.comment }}</textarea></td>
+    </tr>
+    <tr>
+        <td>Added at</td>
+        <td><input type="text" value="{{ job.added_at|date:'d.m.Y H:i' }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Applied at</td>
+        <td>
+            <input type="text" value="{% if job.applied_at %}{{ job.applied_at|date:'d.m.Y H:i' }}{% endif %}" readonly size="80">
+        </td>
+    </tr>
+    <tr>
+        <td>Created at</td>
+        <td><input type="text" value="{{ job.created_at|date:'d.m.Y H:i' }}" readonly size="80"></td>
+    </tr>
+    <tr>
+        <td>Updated at</td>
+        <td><input type="text" value="{{ job.updated_at|date:'d.m.Y H:i' }}" readonly size="80"></td>
+    </tr>
+</table>
+{% endblock %}

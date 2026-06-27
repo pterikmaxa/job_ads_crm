@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+{{ block.super }}
+
+<div class="module aligned">
+    <h2>Технологии</h2>
+
+    <div class="form-row">
+        <div>
+            <a class="button" href="{% url 'admin:sources_searchtechnology_add' %}">
+                Добавить технологию
+            </a>
+
+            <a class="button" href="{% url 'admin:sources_searchtechnology_changelist' %}">
+                Редактировать / деактивировать / удалить технологии
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

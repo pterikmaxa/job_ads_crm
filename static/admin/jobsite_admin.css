@@ -1,0 +1,22 @@
+.spin-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.spin-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #6b7280;
+    background: #f3f4f6;
+    color: #111827;
+    border-radius: 4px;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+}
+
+.spin-btn:hover {
+    background: #e5e7eb;
+}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load home_stats %}
+
+{% block title %}Job Ads CRM{% endblock %}
+
+{% block content %}
+<h1>Job Ads CRM</h1>
+<p>CRM для вакансий запущена.</p>
+
+<h2>Быстрый доступ</h2>
+
+<ul class="quick-links">
+    <li><a href="{% url 'admin:index' %}">Админка Django</a></li>
+    <li><a href="{% url 'admin:vacancies_jobpost_changelist' %}">Вакансии</a></li>
+    <li><a href="{% url 'admin:sources_jobsite_changelist' %}">Сайты вакансий</a></li>
+    <li><a href="{% url 'admin:sources_searchsignature_changelist' %}">Поисковые запросы</a></li>
+    <li><a href="{% url 'admin:cvs_cvprofile_changelist' %}">Профили резюме</a></li>
+</ul>
+
+<h2>Задания на сегодня</h2>
+
+{% today_task_rows as rows %}
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th>Раздел</th>
+        <th>Активные / сегодня</th>
+        <th>Всего строк</th>
+    </tr>
+    {% for row in rows %}
+    <tr>
+        <td>{{ row.name }}</td>
+        <td>{{ row.current }}</td>
+        <td>{{ row.total }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Последние вакансии</h2>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th>Название</th>
+        <th>Компания</th>
+        <th>Сайт</th>
+        <th>Страна</th>
+        <th>Профиль резюме</th>
+        <th>Статус</th>
+        <th>Ответ</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for job in latest_job_posts %}
+    <tr>
+        <td>{{ job.title }}</td>
+        <td>{{ job.company }}</td>
+        <td>{{ job.job_site.name }}</td>
+        <td>{{ job.country }}</td>
+        <td>{{ job.cv_profile }}</td>
+        <td>{{ job.status }}</td>
+        <td>{{ job.response_received }}</td>
+        <td>
+            <a href="{% url 'jobpost_detail' job.pk %}">Открыть</a>
+            |
+            <a href="{% url 'admin:vacancies_jobpost_change' job.pk %}">Редактировать</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="8">Вакансий пока нет.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

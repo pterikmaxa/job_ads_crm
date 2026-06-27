@@ -39,3 +39,23 @@ sqlite_data.json
 # Local temp
 tmp/
 temp/
+
+# local environment
+.venv/
+.env
+.env.*
+*.sqlite3
+*.db
+
+# python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# django local/static/generated
+staticfiles/
+media/
+
+# backups
+*.bak
+*.bak_*

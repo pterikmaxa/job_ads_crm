@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Сайты вакансий{% endblock %}
+
+{% block content %}
+<h1>Сайты вакансий</h1>
+
+<p>
+    <a href="{% url 'home' %}">На главную</a>
+    |
+    <a href="{% url 'admin:sources_jobsite_add' %}">Добавить сайт</a>
+</p>
+
+<table>
+    <tr>
+        <th>Название</th>
+        <th>Страна</th>
+        <th>URL</th>
+        <th>Приоритет</th>
+        <th>План в день</th>
+        <th>Обработано сегодня</th>
+        <th>Статус</th>
+        <th>Активен</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for site in job_sites %}
+    <tr>
+        <td>{{ site.name }}</td>
+        <td>{{ site.country }}</td>
+        <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
+        <td>{{ site.priority }}</td>
+        <td>{{ site.daily_plan }}</td>
+        <td>{{ site.processed_today }}</td>
+        <td>
+            <span class="status-dot status-{{ site.color_status }}"></span>
+
+            {% if site.color_status == "problem" %}
+                Проблема
+            {% elif site.color_status == "attention" %}
+                Внимание
+            {% elif site.color_status == "ok" %}
+                OK
+            {% elif site.color_status == "inactive" %}
+                Неактивен
+            {% elif site.color_status == "broken" %}
+                Сломан
+            {% else %}
+                {{ site.color_status }}
+            {% endif %}
+        </td>
+        <td>{{ site.is_active }}</td>
+        <td>
+            <a href="{% url 'admin:sources_jobsite_change' site.pk %}">Редактировать</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="9">Сайтов пока нет.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

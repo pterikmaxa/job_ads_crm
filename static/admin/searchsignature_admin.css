@@ -1,0 +1,15 @@
+.technology-choice-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 14px;
+}
+
+.technology-choice-label {
+    color: #cbd5e1;
+    white-space: nowrap;
+}
+
+#id_technology_choice {
+    min-width: 180px;
+}

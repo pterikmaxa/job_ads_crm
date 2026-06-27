@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class CvsConfig(AppConfig):
-    name = 'cvs'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "cvs"
+    verbose_name = "Резюме"
