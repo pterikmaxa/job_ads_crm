@@ -1,36 +1,40 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
+*.pyo
+*.pyd
+*.pyc
 
-# Virtual environment
+# Virtual environments
 .venv/
 venv/
 env/
 
 # Django
+*.log
+local_settings.py
 db.sqlite3
-*.sqlite3
-/media/
-/staticfiles/
+media/
+staticfiles/
 
-# Environment variables
+# Secrets / env
 .env
 .env.*
+*.secret
+secrets.json
 
 # IDE
-.vscode/
 .idea/
+.vscode/
+.run/
 
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-logs/
+# SQLite / local exports
+sqlite_data.json
 
-# Local documents / CV files
-*.odt
-*.docx
-*.pdf
+# Local temp
+tmp/
+temp/
