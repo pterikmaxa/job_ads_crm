@@ -2,7 +2,14 @@ from django import forms
 from django.contrib import admin
 from django.db import OperationalError, ProgrammingError
 
-from .models import JobPost, JobPostStatus
+from .models import (
+    Company,
+    JobPost,
+    JobPostStatus,
+    Lead,
+    LeadAction,
+    LeadResponse,
+)
 
 
 class CleanRelatedWidgetMixin:
@@ -107,3 +114,196 @@ class JobPostAdmin(CleanRelatedWidgetMixin, admin.ModelAdmin):
     @admin.display(description="Статус", ordering="status")
     def status_label(self, obj):
         return obj.status_name
+
+
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "website",
+        "updated_at",
+    )
+    search_fields = (
+        "name",
+        "website",
+        "comment",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+
+class LeadActionInline(admin.TabularInline):
+    model = LeadAction
+    extra = 0
+    fields = (
+        "action_type",
+        "status",
+        "planned_date",
+        "action_date",
+        "contact_value",
+        "cv_text",
+        "comment",
+    )
+    show_change_link = True
+
+
+class LeadResponseInline(admin.TabularInline):
+    model = LeadResponse
+    extra = 0
+    fields = (
+        "response_type",
+        "response_channel",
+        "response_date",
+        "from_value",
+        "next_action_date",
+        "comment",
+    )
+    show_change_link = True
+
+
+@admin.register(Lead)
+class LeadAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "company",
+        "language",
+        "location_text",
+        "priority",
+        "status",
+        "created_at",
+        "updated_at",
+    )
+    search_fields = (
+        "title",
+        "company__name",
+        "url",
+        "description_text",
+        "technology_text",
+        "comment",
+    )
+    list_filter = (
+        "status",
+        "priority",
+        "language",
+        "technologies",
+        "company",
+    )
+    filter_horizontal = (
+        "technologies",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+    fieldsets = (
+        (
+            "Основное",
+            {
+                "fields": (
+                    "title",
+                    "company",
+                    "url",
+                    "language",
+                    "location_text",
+                    "priority",
+                    "status",
+                )
+            },
+        ),
+        (
+            "Описание",
+            {
+                "fields": (
+                    "description_text",
+                    "comment",
+                )
+            },
+        ),
+        (
+            "Технологии",
+            {
+                "fields": (
+                    "technologies",
+                    "technology_text",
+                )
+            },
+        ),
+        (
+            "Служебные даты",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )
+    inlines = (
+        LeadActionInline,
+        LeadResponseInline,
+    )
+
+
+@admin.register(LeadAction)
+class LeadActionAdmin(admin.ModelAdmin):
+    list_display = (
+        "lead",
+        "action_type",
+        "status",
+        "planned_date",
+        "action_date",
+        "contact_value",
+        "cv_text",
+        "updated_at",
+    )
+    search_fields = (
+        "lead__title",
+        "lead__company__name",
+        "contact_value",
+        "cv_text",
+        "message_text",
+        "comment",
+    )
+    list_filter = (
+        "action_type",
+        "status",
+        "planned_date",
+        "action_date",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+
+@admin.register(LeadResponse)
+class LeadResponseAdmin(admin.ModelAdmin):
+    list_display = (
+        "lead",
+        "response_type",
+        "response_channel",
+        "response_date",
+        "from_value",
+        "next_action_date",
+        "updated_at",
+    )
+    search_fields = (
+        "lead__title",
+        "lead__company__name",
+        "from_value",
+        "response_text",
+        "next_action",
+        "comment",
+    )
+    list_filter = (
+        "response_type",
+        "response_channel",
+        "response_date",
+        "next_action_date",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
